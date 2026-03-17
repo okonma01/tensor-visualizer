@@ -37,13 +37,17 @@ function App() {
       </header>
 
       {/* Main content */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-8">
-        {activeTab === 'tabular'    && <TabularSection />}
-        {activeTab === 'timeseries' && <TimeSeriesSection />}
-        {activeTab === 'text'       && <TextSection />}
-        {activeTab === 'image'      && <ImageSection />}
-        {activeTab === 'video'      && <VideoSection />}
-        {activeTab === 'audio'      && <AudioSection />}
+      <main
+        role="tabpanel"
+        aria-live="polite"
+        className="flex-1 max-w-6xl w-full mx-auto px-4 py-8"
+      >
+        {activeTab === 'tabular'    && <TabularSection    key="tabular" />}
+        {activeTab === 'timeseries' && <TimeSeriesSection key="timeseries" />}
+        {activeTab === 'text'       && <TextSection       key="text" />}
+        {activeTab === 'image'      && <ImageSection      key="image" />}
+        {activeTab === 'video'      && <VideoSection      key="video" />}
+        {activeTab === 'audio'      && <AudioSection      key="audio" />}
       </main>
 
       <footer className="text-center text-xs text-slate-400 py-6 border-t border-slate-200">

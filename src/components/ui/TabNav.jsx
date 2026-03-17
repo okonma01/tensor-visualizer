@@ -1,8 +1,9 @@
 export default function TabNav({ tabs, active, onChange }) {
   return (
     <nav
-      className="flex gap-1 overflow-x-auto tab-scrollbar -mx-1 px-1"
+      role="tablist"
       aria-label="Data modality navigation"
+      className="flex gap-1 overflow-x-auto tab-scrollbar -mx-1 px-1"
     >
       {tabs.map((tab) => {
         const isActive = tab.id === active
