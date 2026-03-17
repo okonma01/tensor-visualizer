@@ -1,25 +1,18 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import TensorGrid from '../ui/TensorGrid.jsx'
 import CodePanel from '../ui/CodePanel.jsx'
-import BatchDimBanner from '../ui/BatchDimBanner.jsx'
 import SectionHeader from '../ui/SectionHeader.jsx'
 import { DEFAULT_ROWS, FEATURE_NAMES, LABEL_NAME, SPECIES_MAP } from '../../data/tabularData.js'
 import { tabularCode } from '../../utils/tensorUtils.js'
 
+const FEATURE_LABELS = ['bill length', 'bill depth', 'flipper length', 'body mass']
+
 export default function TabularSection() {
-  const [rows, setRows] = useState(DEFAULT_ROWS.map((r) => ({ ...r })))
-  const [hovered, setHovered] = useState(null) // [ri, ci]
+  const [rows, setRows] = useState(DEFAULT_ROWS.slice(0, 4).map((row) => ({ ...row })))
+  const [hovered, setHovered] = useState(null)
 
-  // Build a 2D float tensor from the rows (features only)
-  const tensorData = useMemo(
-    () => rows.map((r) => FEATURE_NAMES.map((f) => parseFloat(r[f]) || 0)),
-    [rows]
-  )
-
-  const labelData = useMemo(
-    () => rows.map((r) => [r[LABEL_NAME]]),
-    [rows]
-  )
+  const tensorData = rows.map((row) => FEATURE_NAMES.map((name) => parseFloat(row[name]) || 0))
+  const labelData = rows.map((row) => row[LABEL_NAME])
 
   function updateCell(ri, field, val) {
     setRows((prev) => {
@@ -29,91 +22,80 @@ export default function TabularSection() {
     })
   }
 
-  const code = tabularCode(tensorData, FEATURE_NAMES)
+  const code = tabularCode(tensorData, labelData, FEATURE_NAMES)
 
   return (
-    <div className="animate-slide-up">
+    <section id="tabular" className="surface">
       <SectionHeader
         emoji="📊"
         title="Tabular Data"
-        subtitle="The foundation of classical machine learning. Rows are independent samples; columns are features. Even the simplest CSV becomes a 2D float tensor — one row per sample, one column per feature."
+        subtitle="A spreadsheet already has tensor structure hiding inside it. Each row is one sample. Each column is one numeric feature."
         shape={`[${rows.length}, ${FEATURE_NAMES.length}]`}
       />
 
-      <div className="grid lg:grid-cols-2 gap-8">
-        {/* Left: interactive table */}
-        <div>
-          <h3 className="text-sm font-semibold text-slate-600 mb-3 uppercase tracking-wide">
-            🐧 Palmer Penguins — edit any cell
-          </h3>
-          <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200">
-                  <th className="text-left px-3 py-2.5 text-xs font-semibold text-slate-500 uppercase tracking-wide">#</th>
-                  {FEATURE_NAMES.map((f) => (
-                    <th key={f} className="text-left px-3 py-2.5 text-xs font-semibold text-slate-500 uppercase tracking-wide">{f}</th>
-                  ))}
-                  <th className="text-left px-3 py-2.5 text-xs font-semibold text-indigo-500 uppercase tracking-wide">species (label)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row, ri) => (
-                  <tr
-                    key={ri}
-                    className={`border-b border-slate-100 transition-colors ${hovered && hovered[0] === ri ? 'bg-indigo-50' : 'hover:bg-slate-50'}`}
-                  >
-                    <td className="px-3 py-2 text-slate-400 text-xs font-mono">{ri}</td>
-                    {FEATURE_NAMES.map((f, ci) => (
-                      <td key={f} className="px-2 py-1">
-                        <input
-                          type="number"
-                          step="0.1"
-                          value={row[f]}
-                          onChange={(e) => updateCell(ri, f, e.target.value)}
-                          onFocus={() => setHovered([ri, ci])}
-                          onBlur={() => setHovered(null)}
-                          className={`w-24 text-xs font-mono px-2 py-1 rounded-md border transition-colors outline-none focus:ring-2 focus:ring-indigo-300
-                            ${hovered && hovered[0] === ri && hovered[1] === ci
-                              ? 'border-indigo-400 bg-indigo-50'
-                              : 'border-slate-200 bg-white'}`}
-                        />
-                      </td>
-                    ))}
-                    <td className="px-3 py-2">
-                      <select
-                        value={row[LABEL_NAME]}
-                        onChange={(e) => updateCell(ri, LABEL_NAME, parseInt(e.target.value))}
-                        className="text-xs font-medium px-2 py-1 rounded-md border border-slate-200 bg-white outline-none focus:ring-2 focus:ring-indigo-300"
-                      >
-                        {Object.entries(SPECIES_MAP).map(([k, v]) => (
-                          <option key={k} value={k}>{v} ({k})</option>
-                        ))}
-                      </select>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+        <div className="soft-panel overflow-x-auto">
+          <div className="flex flex-wrap items-center gap-2 mb-4 text-[11px] uppercase tracking-[0.16em] text-slate-500 font-bold">
+            <span className="rounded-full bg-white px-3 py-1">Palmer penguins</span>
+            <span className="rounded-full bg-white px-3 py-1">4 samples</span>
+            <span className="rounded-full bg-white px-3 py-1">4 features</span>
           </div>
-          <p className="text-xs text-slate-400 mt-2">✏️ Edit any cell — the tensor updates live on the right.</p>
+
+          <table className="w-full min-w-[36rem] text-sm">
+            <thead>
+              <tr className="border-b border-[color:var(--line)] text-slate-500">
+                <th className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">row</th>
+                {FEATURE_NAMES.map((name) => (
+                  <th key={name} className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">{name}</th>
+                ))}
+                <th className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">species</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, rowIndex) => (
+                <tr key={rowIndex} className={hovered?.[0] === rowIndex ? 'bg-white' : ''}>
+                  <td className="px-3 py-2 text-xs font-mono text-slate-400">{rowIndex}</td>
+                  {FEATURE_NAMES.map((name, columnIndex) => (
+                    <td key={name} className="px-2 py-2">
+                      <input
+                        type="number"
+                        step="0.1"
+                        value={row[name]}
+                        onChange={(event) => updateCell(rowIndex, name, event.target.value)}
+                        onFocus={() => setHovered([rowIndex, columnIndex])}
+                        onBlur={() => setHovered(null)}
+                        className="w-20 rounded-xl border border-[color:var(--line)] bg-white px-2 py-1.5 text-center text-xs font-mono outline-none focus:border-[color:var(--accent-2)]"
+                      />
+                    </td>
+                  ))}
+                  <td className="px-3 py-2 text-xs font-semibold text-slate-600">{SPECIES_MAP[row[LABEL_NAME]]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="mt-3 text-sm leading-6 text-slate-500">
+            Change a number and you are changing one entry in the matrix that the model will actually receive.
+          </p>
         </div>
 
-        {/* Right: tensor view */}
-        <div>
-          <h3 className="text-sm font-semibold text-slate-600 mb-3 uppercase tracking-wide">
-            Tensor — X (features) · shape <code className="font-mono text-indigo-600">[{rows.length}, {FEATURE_NAMES.length}]</code>
-          </h3>
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 overflow-x-auto">
-            <div className="flex gap-1 mb-2">
-              {FEATURE_NAMES.map((f, ci) => (
-                <div key={f} className={`text-[10px] text-center font-mono text-slate-400 transition-colors
-                  ${hovered && hovered[1] === ci ? 'text-indigo-500 font-bold' : ''}
-                  `} style={{ minWidth: '2.6rem' }}>
-                  {f.replace('_', '\n')}
+        <div className="space-y-4">
+          <div className="soft-panel overflow-x-auto">
+            <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">Feature tensor X</h3>
+                <p className="text-sm text-slate-500">Each sample stays on its own row, with feature values lined up across the page.</p>
+              </div>
+              <code className="rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-2)]">[{rows.length}, {FEATURE_NAMES.length}]</code>
+            </div>
+
+            <div className="flex flex-wrap gap-2 mb-4">
+              {FEATURE_LABELS.map((label, ci) => (
+                <div key={label} className={`rounded-full px-3 py-1 text-[11px] font-bold ${hovered?.[1] === ci ? 'bg-[#e8eeff] text-[color:var(--accent-2)]' : 'bg-white text-slate-500'}`}>
+                  {label}
                 </div>
               ))}
             </div>
+
             <TensorGrid
               data={tensorData}
               onHover={(ri, ci) => setHovered(ri !== null ? [ri, ci] : null)}
@@ -121,35 +103,32 @@ export default function TabularSection() {
               colorScale="blue"
               showIndices
               dimLabels={{ rows: 'sample', cols: 'feat' }}
+              cellSize="sm"
             />
           </div>
 
-          <div className="mt-4">
-            <h3 className="text-sm font-semibold text-slate-600 mb-2 uppercase tracking-wide">
-              Label tensor — y · shape <code className="font-mono text-indigo-600">[{rows.length}, 1]</code>
-            </h3>
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4 overflow-x-auto">
-              <TensorGrid
-                data={labelData}
-                colorScale="purple"
-              />
+          <div className="soft-panel">
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <h3 className="text-lg font-bold text-slate-900">Label tensor y</h3>
+              <code className="rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent)]">[{rows.length}]</code>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {rows.map((row, rowIndex) => (
+                <div key={rowIndex} className="rounded-full bg-white px-3 py-2 text-sm text-slate-600">
+                  <span className="font-mono text-[color:var(--accent)]">{row[LABEL_NAME]}</span>
+                  <span className="ml-2">{SPECIES_MAP[row[LABEL_NAME]]}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="mt-3 bg-slate-50 rounded-lg px-3 py-2 text-xs text-slate-500 border border-slate-100">
-            <strong className="text-slate-700">How it works:</strong> Each penguin is a row. Each measurement is a column (a feature dimension). Together they form a 2D tensor of shape{' '}
-            <code className="font-mono text-indigo-600">[N_samples, N_features]</code> — the universal PyTorch input format for tabular data.
+          <div className="note-card text-sm leading-6">
+            Most tabular models start with the same shape pattern: <code className="font-mono">[samples, features]</code>. One penguin is a length-4 vector. Four penguins become a 4×4 matrix.
           </div>
         </div>
       </div>
 
-      <BatchDimBanner
-        singleShape={`[${FEATURE_NAMES.length}]`}
-        batchShape={`[${rows.length}, ${FEATURE_NAMES.length}]`}
-        description="A single penguin (one sample) is a 1D tensor of 4 features. Stack N penguins and you get a 2D tensor — that's your batch."
-      />
-
       <CodePanel code={code} />
-    </div>
+    </section>
   )
 }

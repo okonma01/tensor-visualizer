@@ -1,16 +1,37 @@
-# React + Vite
+# Everything is a Tensor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small teaching demo that shows how three common data types become PyTorch tensors:
 
-Currently, two official plugins are available:
+- Tabular data as a 2D feature matrix
+- Time-series data as a 2D sequence over time
+- Image data as a 2D grayscale pixel grid
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The project is intentionally small and client-side only. The point is to make tensor shapes intuitive without extra moving parts.
 
-## React Compiler
+## Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- Vite
+- Tailwind CSS
+- GitHub Pages
 
-## Expanding the ESLint configuration
+## Local Development
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+## Production Build
+
+```bash
+npm run build
+```
+
+## Deployment
+
+GitHub Actions builds the site and deploys it to GitHub Pages.
+
+## Scope
+
+This trimmed version deliberately avoids higher-maintenance features like live tokenization, audio FFTs, and video frame pipelines. It focuses on the simplest path to the main idea: everything a model sees is ultimately a tensor.
