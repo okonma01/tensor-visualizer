@@ -4,7 +4,6 @@ import CodePanel from '../ui/CodePanel.jsx'
 import BatchDimBanner from '../ui/BatchDimBanner.jsx'
 import SectionHeader from '../ui/SectionHeader.jsx'
 import { pseudoEmbeddings, tokenColor, textCode } from '../../utils/tensorUtils.js'
-import { encode, decode } from 'gpt-tokenizer'
 
 const MAX_CHARS = 120
 const EMBED_DIM = 8
@@ -18,13 +17,14 @@ export default function TextSection() {
   const [hoveredToken, setHoveredToken] = useState(null)
   const debounceRef = useRef(null)
 
-  // Tokenize whenever text changes
+  // Tokenize whenever text changes (gpt-tokenizer loaded lazily to keep initial bundle small)
   useEffect(() => {
     clearTimeout(debounceRef.current)
-    debounceRef.current = setTimeout(() => {
+    setLoading(true)
+    debounceRef.current = setTimeout(async () => {
       try {
+        const { encode, decode } = await import('gpt-tokenizer')
         const ids = encode(text)
-        // Decode each token individually to get its string representation
         const strs = ids.map((id) => {
           try { return decode([id]) } catch { return `[${id}]` }
         })
@@ -32,7 +32,6 @@ export default function TextSection() {
         setTokenStrings(strs)
       } catch (err) {
         console.error('Tokenizer error', err)
-        // Fallback: simple whitespace split
         const words = text.trim().split(/\s+/).filter(Boolean)
         setTokenIds(words.map((_, i) => i * 100 + 42))
         setTokenStrings(words)
