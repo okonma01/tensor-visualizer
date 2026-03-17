@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans antialiased;
+  }
+  * { box-sizing: border-box; }
+}
+
+@layer utilities {
+  .tensor-cell {
+    @apply flex items-center justify-center text-xs font-mono rounded cursor-default select-none transition-all duration-150;
+    min-width: 2.5rem;
+    min-height: 2rem;
+  }
+  .tensor-cell-highlight {
+    @apply ring-2 ring-offset-1 ring-indigo-500 scale-110 z-10;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+  .tab-scrollbar::-webkit-scrollbar { height: 0; }
+}

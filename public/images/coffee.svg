@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Background -->
+  <rect width="128" height="128" fill="#f5f0e8"/>
+  <!-- Cup body -->
+  <path d="M32 60 L38 104 Q40 112 50 112 L78 112 Q88 112 90 104 L96 60 Z" fill="#c8a882" stroke="#8b6a4e" stroke-width="2"/>
+  <!-- Cup rim -->
+  <ellipse cx="64" cy="60" rx="32" ry="8" fill="#d4b896" stroke="#8b6a4e" stroke-width="2"/>
+  <!-- Coffee surface -->
+  <ellipse cx="64" cy="62" rx="28" ry="6" fill="#6b3a1f"/>
+  <!-- Latte art swirl -->
+  <path d="M64 66 Q72 64 70 68 Q68 72 64 70 Q60 68 62 64 Q64 62 68 64" fill="none" stroke="#c8a882" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Handle -->
+  <path d="M96 72 Q112 72 112 84 Q112 96 96 96" fill="none" stroke="#8b6a4e" stroke-width="5" stroke-linecap="round"/>
+  <!-- Saucer -->
+  <ellipse cx="64" cy="114" rx="42" ry="8" fill="#d4b896" stroke="#8b6a4e" stroke-width="1.5"/>
+  <ellipse cx="64" cy="113" rx="28" ry="4" fill="#c8a882"/>
+  <!-- Steam -->
+  <path d="M52 52 Q50 44 53 38 Q56 32 54 26" fill="none" stroke="#cccccc" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M64 50 Q62 42 65 36 Q68 30 66 24" fill="none" stroke="#cccccc" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M76 52 Q74 44 77 38 Q80 32 78 26" fill="none" stroke="#cccccc" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+</svg>
