@@ -19,7 +19,7 @@ export default function TensorGrid({
   const colCount = data[0]?.length || 0
 
   return (
-    <div className="overflow-x-auto">
+    <div className="w-max min-w-full">
       <table className="border-collapse text-center font-mono">
         {showIndices && (
           <thead>

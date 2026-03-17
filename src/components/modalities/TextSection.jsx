@@ -17,7 +17,7 @@ export default function TextSection() {
       <SectionHeader
         emoji="💬"
         title="Text Data"
-        subtitle="Words are not numbers, so language models first turn text into token IDs. Those IDs are then mapped to dense embedding vectors."
+        subtitle="Text is converted into token IDs first, then expanded into embedding vectors that a model can process."
         shape={`[${example.tokens.length}, ${EMBED_DIM}]`}
       />
 
@@ -39,7 +39,7 @@ export default function TextSection() {
             </div>
             <p className="text-lg font-bold text-slate-900">{example.text}</p>
             <p className="mt-3 text-sm leading-6 text-slate-500">
-              The tokenizer splits the sentence into smaller units. Each unit gets an integer ID.
+              The sentence is broken into token pieces, and each piece maps to an integer ID.
             </p>
           </div>
 
@@ -63,7 +63,7 @@ export default function TextSection() {
           <div className="soft-panel overflow-x-auto">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Embedding matrix</h3>
+                <h3 className="text-lg font-bold text-slate-900">Embedding tensor</h3>
                 <p className="text-sm text-slate-500">Each token ID expands into a short learned vector.</p>
               </div>
               <code className="rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-2)]">[{example.tokens.length}, {EMBED_DIM}]</code>
@@ -79,7 +79,7 @@ export default function TextSection() {
           </div>
 
           <div className="note-card text-sm leading-6">
-            Text usually needs two steps: tokenization first, embeddings second. That is why language tensors often start from IDs and then grow into a matrix with shape <code className="font-mono">[sequence length, embedding dim]</code>.
+            Text pipelines usually move from token IDs to embeddings, resulting in a tensor with shape <code className="font-mono">[sequence length, embedding dim]</code>.
           </div>
         </div>
       </div>

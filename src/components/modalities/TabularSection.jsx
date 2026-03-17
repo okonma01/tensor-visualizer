@@ -29,57 +29,59 @@ export default function TabularSection() {
       <SectionHeader
         emoji="📊"
         title="Tabular Data"
-        subtitle="A spreadsheet already has tensor structure hiding inside it. Each row is one sample. Each column is one numeric feature."
+        subtitle="Tabular data already has matrix structure. Each row is one sample, and each column is one numeric feature."
         shape={`[${rows.length}, ${FEATURE_NAMES.length}]`}
       />
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
-        <div className="soft-panel overflow-x-auto">
+        <div className="soft-panel min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-4 text-[11px] uppercase tracking-[0.16em] text-slate-500 font-bold">
             <span className="rounded-full bg-white px-3 py-1">Palmer penguins</span>
             <span className="rounded-full bg-white px-3 py-1">4 samples</span>
             <span className="rounded-full bg-white px-3 py-1">4 features</span>
           </div>
 
-          <table className="w-full min-w-[36rem] text-sm">
-            <thead>
-              <tr className="border-b border-[color:var(--line)] text-slate-500">
-                <th className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">row</th>
-                {FEATURE_NAMES.map((name) => (
-                  <th key={name} className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">{name}</th>
-                ))}
-                <th className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">species</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row, rowIndex) => (
-                <tr key={rowIndex} className={hovered?.[0] === rowIndex ? 'bg-white' : ''}>
-                  <td className="px-3 py-2 text-xs font-mono text-slate-400">{rowIndex}</td>
-                  {FEATURE_NAMES.map((name, columnIndex) => (
-                    <td key={name} className="px-2 py-2">
-                      <input
-                        type="number"
-                        step="0.1"
-                        value={row[name]}
-                        onChange={(event) => updateCell(rowIndex, name, event.target.value)}
-                        onFocus={() => setHovered([rowIndex, columnIndex])}
-                        onBlur={() => setHovered(null)}
-                        className="w-20 rounded-xl border border-[color:var(--line)] bg-white px-2 py-1.5 text-center text-xs font-mono outline-none focus:border-[color:var(--accent-2)]"
-                      />
-                    </td>
+          <div className="overflow-x-auto">
+            <table className="min-w-[36rem] text-sm">
+              <thead>
+                <tr className="border-b border-[color:var(--line)] text-slate-500">
+                  <th className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">row</th>
+                  {FEATURE_NAMES.map((name) => (
+                    <th key={name} className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">{name}</th>
                   ))}
-                  <td className="px-3 py-2 text-xs font-semibold text-slate-600">{SPECIES_MAP[row[LABEL_NAME]]}</td>
+                  <th className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">species</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {rows.map((row, rowIndex) => (
+                  <tr key={rowIndex} className={hovered?.[0] === rowIndex ? 'bg-white' : ''}>
+                    <td className="px-3 py-2 text-xs font-mono text-slate-400">{rowIndex}</td>
+                    {FEATURE_NAMES.map((name, columnIndex) => (
+                      <td key={name} className="px-2 py-2">
+                        <input
+                          type="number"
+                          step="0.1"
+                          value={row[name]}
+                          onChange={(event) => updateCell(rowIndex, name, event.target.value)}
+                          onFocus={() => setHovered([rowIndex, columnIndex])}
+                          onBlur={() => setHovered(null)}
+                          className="w-20 rounded-xl border border-[color:var(--line)] bg-white px-2 py-1.5 text-center text-xs font-mono outline-none focus:border-[color:var(--accent-2)]"
+                        />
+                      </td>
+                    ))}
+                    <td className="px-3 py-2 text-xs font-semibold text-slate-600">{SPECIES_MAP[row[LABEL_NAME]]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <p className="mt-3 text-sm leading-6 text-slate-500">
-            Change a number and you are changing one entry in the matrix that the model will actually receive.
+            Change a number and the corresponding matrix entry changes with it.
           </p>
         </div>
 
-        <div className="space-y-4">
-          <div className="soft-panel overflow-x-auto">
+        <div className="space-y-4 min-w-0">
+          <div className="soft-panel min-w-0">
             <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">Feature tensor X</h3>
@@ -96,15 +98,17 @@ export default function TabularSection() {
               ))}
             </div>
 
-            <TensorGrid
-              data={tensorData}
-              onHover={(ri, ci) => setHovered(ri !== null ? [ri, ci] : null)}
-              highlightCell={hovered}
-              colorScale="blue"
-              showIndices
-              dimLabels={{ rows: 'sample', cols: 'feat' }}
-              cellSize="sm"
-            />
+            <div className="overflow-x-auto">
+              <TensorGrid
+                data={tensorData}
+                onHover={(ri, ci) => setHovered(ri !== null ? [ri, ci] : null)}
+                highlightCell={hovered}
+                colorScale="blue"
+                showIndices
+                dimLabels={{ rows: 'sample', cols: 'feat' }}
+                cellSize="sm"
+              />
+            </div>
           </div>
 
           <div className="soft-panel">
@@ -123,7 +127,9 @@ export default function TabularSection() {
           </div>
 
           <div className="note-card text-sm leading-6">
-            Most tabular models start with the same shape pattern: <code className="font-mono">[samples, features]</code>. One penguin is a length-4 vector. Four penguins become a 4×4 matrix.
+            The usual tabular shape is <code className="font-mono">[samples, features]</code>.
+            <br />
+            One penguin is a <code className="font-mono">1-D</code> tensor of length 4, and four penguins form a <code className="font-mono">2-D</code> tensor of shape <code className="font-mono">[4, 4]</code>.
           </div>
         </div>
       </div>

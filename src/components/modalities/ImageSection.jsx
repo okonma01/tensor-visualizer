@@ -46,13 +46,13 @@ export default function ImageSection() {
       <SectionHeader
         emoji="🖼️"
         title="Image Data"
-        subtitle="An image is just a grid. For grayscale data, every location stores one intensity value, so the picture becomes a 2D tensor."
+        subtitle="A grayscale image is a grid of intensity values, so the picture becomes a 2D tensor with one number at each location."
         shape={`[${size}, ${size}]`}
       />
 
       <div className="note-card mb-6 text-sm leading-6">
         <p className="text-sm text-slate-600">
-          <strong className="text-slate-900">{DIGIT.label}.</strong> {DIGIT.description}
+          <strong className="text-slate-900">{DIGIT.label}.</strong> This example uses a 16x16 handwritten zero, where each pixel intensity is stored as an integer from 0 (white) to 255 (black).
         </p>
       </div>
 
@@ -69,7 +69,7 @@ export default function ImageSection() {
           </div>
 
           <div className="soft-panel text-sm leading-6 text-slate-600">
-            <strong className="text-slate-900">Why this matters:</strong> OCR datasets are built exactly this way. A model does not see a handwritten digit. It sees 256 stored intensities.
+            <strong className="text-slate-900">Model view:</strong> the input is a 16x16 grid of 256 pixel intensities, not the handwritten digit as a human sees it.
           </div>
         </div>
 
@@ -87,7 +87,7 @@ export default function ImageSection() {
 
           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem]">
             <div className="soft-panel text-sm leading-6 text-slate-600">
-              <strong className="text-slate-900">Normalization:</strong> pixel values are often divided by 255 so the tensor lives in <code className="font-mono">[0, 1]</code> instead of <code className="font-mono">[0, 255]</code>.
+              <strong className="text-slate-900">Normalization:</strong> a common preprocessing step divides pixel values by 255 so the tensor lives in <code className="font-mono">[0, 1]</code> instead of <code className="font-mono">[0, 255]</code>.
             </div>
 
             <div className="note-card text-sm">

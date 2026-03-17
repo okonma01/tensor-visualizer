@@ -18,8 +18,8 @@ export default function CodePanel({ code }) {
         className="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-semibold text-slate-700 hover:bg-white/60 transition-colors"
       >
         <span className="flex items-center gap-2">
-          <span className="rounded-full bg-[#eef2ff] px-2.5 py-1 font-mono text-[11px] text-[color:var(--accent-2)]">PyTorch</span>
-          <span className="text-slate-500 text-xs">how this idea looks in code</span>
+          <span className="rounded-full bg-[#eef2ff] px-2.5 py-1 font-mono text-[14px] text-[color:var(--accent-2)]">PyTorch</span>
+          <span className="text-slate-500 text-s">how this looks in code</span>
         </span>
         <span className="rounded-full border border-[color:var(--line)] bg-white px-2.5 py-1 text-slate-400 text-xs">{open ? 'hide' : 'show'}</span>
       </button>

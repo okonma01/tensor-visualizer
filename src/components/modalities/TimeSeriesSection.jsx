@@ -26,23 +26,23 @@ export default function TimeSeriesSection() {
       <SectionHeader
         emoji="📈"
         title="Time Series Data"
-        subtitle="Time gives the rows their meaning. Each row is one moment. Each column is one measurement collected at that moment."
+        subtitle="Time-series data keeps order in the rows. Each row is one timestep, and each column is one measurement recorded at that step."
         shape={`[${WINDOW_SIZE}, 4]`}
       />
 
       <div className="note-card mb-6 text-sm leading-6">
-        A stock-price window is a clean tensor example: 8 days, 4 values per day, so the shape is <code className="font-mono">[8, 4]</code>.
+        This stock-price window has 8 timesteps and 4 values at each step, so the tensor shape is <code className="font-mono">[8, 4]</code>.
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-        <div className="space-y-4">
-          <div className="soft-panel">
+        <div className="space-y-4 min-w-0">
+          <div className="soft-panel min-w-0">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <h3 className="text-lg font-bold text-slate-900">8-day price window</h3>
                 <p className="text-sm text-slate-500">Each day contributes Open, High, Low, Close.</p>
               </div>
-              <code className="rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-3)]">[8, 4]</code>
+              <code className="shrink-0 rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-3)]">[8, 4]</code>
             </div>
 
             <svg width="100%" height="90" viewBox={`0 0 ${WINDOW_SIZE * 36} 90`} preserveAspectRatio="none">
@@ -64,60 +64,66 @@ export default function TimeSeriesSection() {
             <p className="mt-2 text-xs text-slate-500">The line helps you see the trend, but the model still receives rows of numbers.</p>
           </div>
 
-          <div className="soft-panel overflow-x-auto">
-            <table className="w-full text-xs font-mono">
-              <thead>
-                <tr className="border-b border-[color:var(--line)] text-slate-500">
-                  <th className="text-left px-3 py-2">Date</th>
-                  {OHLC_LABELS.map((l) => (
-                    <th key={l} className="px-3 py-2">{l}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {windowData.map((row, ri) => (
-                  <tr
-                    key={ri}
-                    className={`cursor-pointer ${hovered?.[0] === ri ? 'bg-white' : ''}`}
-                    onMouseEnter={() => setHovered([ri, null])}
-                    onMouseLeave={() => setHovered(null)}
-                  >
-                    <td className="px-3 py-1.5 text-slate-400 text-[11px]">{windowDates[ri]}</td>
-                    {row.map((v, ci) => (
-                      <td key={ci} className={`px-3 py-1.5 text-center transition-colors ${hovered?.[0] === ri && hovered?.[1] === ci ? 'font-bold text-[color:var(--accent-2)]' : 'text-slate-700'}`}
-                        onMouseEnter={() => setHovered([ri, ci])}
-                      >
-                        {v.toLocaleString()}
-                      </td>
+          <div className="soft-panel min-w-0">
+            <div className="overflow-x-auto">
+              <table className="min-w-[25rem] text-xs font-mono">
+                <thead>
+                  <tr className="border-b border-[color:var(--line)] text-slate-500">
+                    <th className="text-left px-3 py-2">Date</th>
+                    {OHLC_LABELS.map((l) => (
+                      <th key={l} className="px-3 py-2">{l}</th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {windowData.map((row, ri) => (
+                    <tr
+                      key={ri}
+                      className={`cursor-pointer ${hovered?.[0] === ri ? 'bg-white' : ''}`}
+                      onMouseEnter={() => setHovered([ri, null])}
+                      onMouseLeave={() => setHovered(null)}
+                    >
+                      <td className="px-3 py-1.5 text-slate-400 text-[11px]">{windowDates[ri]}</td>
+                      {row.map((v, ci) => (
+                        <td key={ci} className={`px-3 py-1.5 text-center transition-colors ${hovered?.[0] === ri && hovered?.[1] === ci ? 'font-bold text-[color:var(--accent-2)]' : 'text-slate-700'}`}
+                          onMouseEnter={() => setHovered([ri, ci])}
+                        >
+                          {v.toLocaleString()}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="soft-panel overflow-x-auto">
-            <div className="flex items-center justify-between gap-3 mb-4">
+        <div className="space-y-4 min-w-0">
+          <div className="soft-panel min-w-0">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <h3 className="text-lg font-bold text-slate-900">Sequence tensor</h3>
-              <code className="rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-3)]">[{WINDOW_SIZE}, 4]</code>
+              <code className="shrink-0 rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-3)]">[{WINDOW_SIZE}, 4]</code>
             </div>
             <p className="mb-4 text-sm text-slate-500">Each day stays on its own row, and the four measurements for that day run left to right.</p>
-            <TensorGrid
-              data={windowData}
-              onHover={(ri, ci) => setHovered(ri !== null ? [ri, ci] : null)}
-              highlightCell={hovered}
-              colorScale="green"
-              showIndices
-              dimLabels={{ rows: 'day', cols: 'feat' }}
-              maxAbsVal={maxVal}
-              cellSize="sm"
-            />
+            <div className="overflow-x-auto">
+              <TensorGrid
+                data={windowData}
+                onHover={(ri, ci) => setHovered(ri !== null ? [ri, ci] : null)}
+                highlightCell={hovered}
+                colorScale="green"
+                showIndices
+                dimLabels={{ rows: 'day', cols: 'feat' }}
+                maxAbsVal={maxVal}
+                cellSize="sm"
+              />
+            </div>
           </div>
 
           <div className="note-card text-sm leading-6">
-            Sequence models often add one more dimension for batching. One price window has shape <code className="font-mono">[8, 4]</code>. A batch of 32 windows would be <code className="font-mono">[32, 8, 4]</code>.
+            <strong>Batching:</strong> Models often process multiple windows together, which adds a leading batch dimension.
+            <br />
+            A single window is <code className="font-mono">[1, 8, 4]</code>, while 32 windows form <code className="font-mono">[32, 8, 4]</code>.
           </div>
         </div>
       </div>

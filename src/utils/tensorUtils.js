@@ -42,7 +42,7 @@ export function textCode(tokenIds, embedDim) {
 token_ids = torch.tensor(${JSON.stringify(tokenIds)})
 print(token_ids.shape)   # torch.Size([${tokenIds.length}])
 
-embed = torch.nn.Embedding(50257, ${embedDim})
+embed = torch.nn.Embedding(num_embeddings=${tokenIds.length}, embedding_dim=${embedDim})
 embedded = embed(token_ids)
 print(embedded.shape)    # torch.Size([${tokenIds.length}, ${embedDim}])`
 }
