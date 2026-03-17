@@ -42,7 +42,7 @@ export default function TabularSection() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="min-w-[36rem] text-sm">
+            <table className="min-w-[34rem] text-sm">
               <thead>
                 <tr className="border-b border-[color:var(--line)] text-slate-500">
                   <th className="text-left px-3 py-2 text-[11px] uppercase tracking-wide">row</th>

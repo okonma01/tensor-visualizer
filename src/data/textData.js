@@ -1,4 +1,4 @@
-const EMBED_DIM = 6
+const EMBED_DIM = 5
 
 function embeddingRow(tokenId) {
   return Array.from({ length: EMBED_DIM }, (_, index) => {
