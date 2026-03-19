@@ -29,7 +29,7 @@ export default function TabularSection() {
       <SectionHeader
         emoji="📊"
         title="Tabular Data"
-        subtitle="Tabular data already has matrix structure. Each row is one sample, and each column is one numeric feature."
+        subtitle="Tabular data has a matrix structure. Each row is one sample, and each column is one numeric feature."
         shape={`[${rows.length}, ${FEATURE_NAMES.length}]`}
       />
 
@@ -120,7 +120,7 @@ export default function TabularSection() {
               {rows.map((row, rowIndex) => (
                 <div key={rowIndex} className="rounded-full bg-white px-3 py-2 text-sm text-slate-600">
                   <span className="font-mono text-[color:var(--accent)]">{row[LABEL_NAME]}</span>
-                  <span className="ml-2">{SPECIES_MAP[row[LABEL_NAME]]}</span>
+                  <span className="ml-2" style={{ opacity: 0.6 }}>{SPECIES_MAP[row[LABEL_NAME]]}</span>
                 </div>
               ))}
             </div>
@@ -129,7 +129,7 @@ export default function TabularSection() {
           <div className="note-card text-sm leading-6">
             The usual tabular shape is <code className="font-mono">[samples, features]</code>.
             <br />
-            One penguin is a <code className="font-mono">1-D</code> tensor of length 4, and four penguins form a <code className="font-mono">2-D</code> tensor of shape <code className="font-mono">[4, 4]</code>.
+            One penguin is a <code className="font-mono">1D</code> tensor of length 4, and four penguins form a <code className="font-mono">2D</code> tensor of shape <code className="font-mono">[4, 4]</code>.
           </div>
         </div>
       </div>

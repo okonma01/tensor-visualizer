@@ -22,7 +22,7 @@ function App() {
                 Everything is a Tensor
               </h1>
               <p className="mt-4 max-w-2xl text-base sm:text-lg leading-8 text-slate-600">
-                Models do not see words, tables, or pictures. They see arrays of numbers with shapes. This page keeps that idea stripped to the essentials.
+                Models do not see words, tables, or pictures. They see structured arrays of numbers called <strong>tensors</strong>. This page keeps that idea stripped to the essentials.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <span className="hero-chip">4 data types</span>
