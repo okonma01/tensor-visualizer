@@ -24,9 +24,9 @@ export default function TensorGrid({
         {showIndices && (
           <thead>
             <tr>
-              {dimLabels && <th className="text-[10px] text-slate-400 font-normal pr-1 pb-1">{dimLabels.rows} ↓</th>}
+              {dimLabels && <th className="text-[10px] text-gray-600 font-normal pr-1 pb-1">{dimLabels.rows} ↓</th>}
               {Array.from({ length: colCount }, (_, ci) => (
-                <th key={ci} className="text-[10px] text-slate-400 font-normal pb-1 min-w-[2.4rem]">
+                <th key={ci} className="text-[10px] text-gray-600 font-normal pb-1 min-w-[2.4rem]">
                   {dimLabels?.cols ?? ''}[{ci}]
                 </th>
               ))}
@@ -38,7 +38,7 @@ export default function TensorGrid({
             return (
               <tr key={ri}>
                 {showIndices && dimLabels && (
-                  <td className="text-[10px] text-slate-400 font-normal pr-1">[{ri}]</td>
+                  <td className="text-[10px] text-gray-600 font-normal pr-1">[{ri}]</td>
                 )}
                 {row.map((v, ci) => {
                   const isHL = highlightCell && highlightCell[0] === ri && highlightCell[1] === ci
@@ -47,7 +47,7 @@ export default function TensorGrid({
                       key={ci}
                       className={`tensor-cell cursor-default
                         ${sizeClasses}
-                        ${isHL ? 'border-slate-500 bg-slate-50 font-semibold text-slate-900' : ''}
+                        ${isHL ? 'border-gray-500 bg-gray-50 font-semibold text-gray-900' : ''}
                       `}
                       onMouseEnter={() => onHover && onHover(ri, ci, v)}
                       onMouseLeave={() => onHover && onHover(null, null, null)}

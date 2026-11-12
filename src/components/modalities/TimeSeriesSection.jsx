@@ -27,7 +27,6 @@ export default function TimeSeriesSection() {
         emoji="📈"
         title="Time Series Data"
         subtitle="Time-series data keeps order in the rows. Each row is one timestep, and each column is one measurement recorded at that step."
-        shape={`[${WINDOW_SIZE}, 4]`}
       />
 
       <div className="note-card mb-6 text-sm leading-6">
@@ -39,8 +38,8 @@ export default function TimeSeriesSection() {
           <div className="soft-panel min-w-0">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">8-day price window</h3>
-                <p className="text-sm text-slate-500">Each day contributes Open, High, Low, Close.</p>
+                <h3 className="text-lg font-bold text-gray-900">8-day price window</h3>
+                <p className="text-sm text-gray-700">Each day contributes Open, High, Low, Close.</p>
               </div>
               <code className="shrink-0 rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-3)]">[8, 4]</code>
             </div>
@@ -53,22 +52,22 @@ export default function TimeSeriesSection() {
                 const x2 = index * 36 + 18
                 const y1 = 74 - ((previous - closeMin) / (closeMax - closeMin || 1)) * 56
                 const y2 = 74 - ((close - closeMin) / (closeMax - closeMin || 1)) * 56
-                return <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#5f83f2" strokeWidth="3" strokeLinecap="round" />
+                return <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} stroke="var(--accent)" strokeWidth="3" strokeLinecap="round" />
               })}
               {closes.map((close, index) => {
                 const x = index * 36 + 18
                 const y = 74 - ((close - closeMin) / (closeMax - closeMin || 1)) * 56
-                return <circle key={index} cx={x} cy={y} r={hovered?.[0] === index ? 5 : 4} fill={hovered?.[0] === index ? '#ef7a53' : '#5f83f2'} />
+                return <circle key={index} cx={x} cy={y} r={hovered?.[0] === index ? 5 : 4} fill={hovered?.[0] === index ? 'var(--accent-2)' : 'var(--accent)'} />
               })}
             </svg>
-            <p className="mt-2 text-xs text-slate-500">The line helps you see the trend, but the model still receives rows of numbers.</p>
+            <p className="mt-2 text-xs text-gray-700">The line helps you see the trend, but the model still receives rows of numbers.</p>
           </div>
 
           <div className="soft-panel min-w-0">
             <div className="overflow-x-auto">
               <table className="min-w-[25rem] text-xs font-mono">
                 <thead>
-                  <tr className="border-b border-[color:var(--line)] text-slate-500">
+                  <tr className="border-b border-[color:var(--line)] text-gray-700">
                     <th className="text-left px-3 py-2">Date</th>
                     {OHLC_LABELS.map((l) => (
                       <th key={l} className="px-3 py-2">{l}</th>
@@ -83,9 +82,9 @@ export default function TimeSeriesSection() {
                       onMouseEnter={() => setHovered([ri, null])}
                       onMouseLeave={() => setHovered(null)}
                     >
-                      <td className="px-3 py-1.5 text-slate-400 text-[11px]">{windowDates[ri]}</td>
+                      <td className="px-3 py-1.5 text-gray-600 text-[11px]">{windowDates[ri]}</td>
                       {row.map((v, ci) => (
-                        <td key={ci} className={`px-3 py-1.5 text-center transition-colors ${hovered?.[0] === ri && hovered?.[1] === ci ? 'font-bold text-[color:var(--accent-2)]' : 'text-slate-700'}`}
+                        <td key={ci} className={`px-3 py-1.5 text-center transition-colors ${hovered?.[0] === ri && hovered?.[1] === ci ? 'font-bold text-[color:var(--accent-2)]' : 'text-gray-700'}`}
                           onMouseEnter={() => setHovered([ri, ci])}
                         >
                           {v.toLocaleString()}
@@ -102,10 +101,10 @@ export default function TimeSeriesSection() {
         <div className="space-y-4 min-w-0">
           <div className="soft-panel min-w-0">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-              <h3 className="text-lg font-bold text-slate-900">Sequence tensor</h3>
+              <h3 className="text-lg font-bold text-gray-900">Sequence tensor</h3>
               <code className="shrink-0 rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent-3)]">[{WINDOW_SIZE}, 4]</code>
             </div>
-            <p className="mb-4 text-sm text-slate-500">Each day stays on its own row, and the four measurements for that day run left to right.</p>
+            <p className="mb-4 text-sm text-gray-700">Each day stays on its own row, and the four measurements for that day run left to right.</p>
             <div className="overflow-x-auto">
               <TensorGrid
                 data={windowData}

@@ -17,12 +17,11 @@ function App() {
         <header className="surface-lg hero-card mb-8 sm:mb-10">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
             <div>
-              <p className="eyebrow mb-3">A gentle tour of deep-learning inputs</p>
-              <h1 className="text-4xl sm:text-6xl font-bold tracking-[-0.05em] text-slate-900 leading-none text-balance">
-                Everything is a Tensor
+              <h1 className="text-4xl sm:text-6xl font-bold tracking-[-0.05em] text-gray-900 leading-none text-balance">
+                Tensor Is All You Need
               </h1>
-              <p className="mt-4 max-w-2xl text-base sm:text-lg leading-8 text-slate-600">
-                Models do not see words, tables, or pictures. They see structured arrays of numbers called <strong>tensors</strong>. This page keeps that idea stripped to the essentials.
+              <p className="mt-4 max-w-2xl text-base sm:text-lg leading-8 text-gray-700">
+                AI Models do not see words, tables, or pictures. They process structured arrays of numbers called <strong>tensors</strong>. This page explains this essential idea.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 <span className="hero-chip">4 data types</span>
@@ -30,7 +29,7 @@ function App() {
               </div>
             </div>
 
-            <div className="soft-panel hero-panel">
+            <div className="soft-panel">
               <p className="eyebrow mb-3">On this page</p>
               <div className="flex flex-wrap gap-2">
                 {SECTIONS.map((section) => (
@@ -44,9 +43,6 @@ function App() {
                   </a>
                 ))}
               </div>
-              <p className="mt-4 text-sm leading-6 text-slate-500">
-                Each section shows the same pattern from a different angle: source data, tensor layout, and the underlying PyTorch implementation.
-              </p>
             </div>
           </div>
         </header>
@@ -58,7 +54,7 @@ function App() {
           <ImageSection />
         </main>
 
-        <footer className="py-10 text-center text-sm text-slate-500 tracking-[0.02em]">
+        <footer className="py-10 text-center text-sm text-gray-700 tracking-[0.02em]">
           <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
             <span>
               Created by <a href="https://okonma01.github.io" className="underline underline-offset-4" target="_blank" rel="noopener noreferrer">okonma01</a>.

@@ -6,17 +6,15 @@
 
 @layer base {
   :root {
-    --bg: #f5f2ec;
-    --bg-deep: #e6e0d6;
-    --ink: #2b2925;
-    --muted: #676056;
-    --line: #d1c8bb;
-    --panel: rgba(255, 255, 255, 0.98);
-    --soft: #efe9df;
-    --accent: #7a6f5e;
-    --accent-2: #5c554a;
-    --accent-3: #9a8f7d;
-    --shadow: rgba(43, 41, 37, 0.11);
+    --bg: #f4f5f6;
+    --ink: #17191c;
+    --muted: #4b5158;
+    --line: #c4c9cf;
+    --panel: #ffffff;
+    --soft: #eef0f2;
+    --accent: #5c6269;
+    --accent-2: #33383e;
+    --accent-3: #555d66;
   }
 
   html {
@@ -26,16 +24,12 @@
   body {
     font-family: 'Nunito', sans-serif;
     color: var(--ink);
-    background:
-      radial-gradient(circle at 0% 0%, rgba(122, 111, 94, 0.08), transparent 24%),
-      radial-gradient(circle at 100% 0%, rgba(92, 85, 74, 0.06), transparent 20%),
-      radial-gradient(circle at 50% 35%, rgba(154, 143, 125, 0.06), transparent 24%),
-      linear-gradient(180deg, #fbfaf7 0%, var(--bg) 48%, var(--bg-deep) 100%);
+    background: var(--bg);
     @apply antialiased;
   }
 
   body::selection {
-    background: rgba(122, 111, 94, 0.18);
+    background: #dfe3e7;
   }
 
   * {
@@ -58,33 +52,28 @@
 
 @layer utilities {
   .page-shell {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.18) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
-    background-size: 32px 32px;
+    background-image: none;
   }
 
   .surface-lg {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 249, 243, 0.94));
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 2rem;
-    box-shadow: 0 26px 64px var(--shadow);
     padding: 1.5rem;
     position: relative;
   }
 
   .surface {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 247, 241, 0.93));
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 1.75rem;
-    box-shadow: 0 18px 42px rgba(43, 41, 37, 0.1);
     padding: 1.25rem;
     position: relative;
   }
 
   .surface::before,
   .surface-lg::before {
-    background: linear-gradient(90deg, rgba(122, 111, 94, 0.92), rgba(92, 85, 74, 0.8), rgba(154, 143, 125, 0.78));
+    background: var(--accent);
     border-radius: 999px;
     content: '';
     height: 4px;
@@ -95,11 +84,10 @@
   }
 
   .soft-panel {
-    background: linear-gradient(180deg, rgba(239, 233, 223, 0.96), rgba(251, 249, 245, 0.92));
+    background: var(--soft);
     border: 1px solid var(--line);
     border-radius: 1.5rem;
     padding: 1rem 1.1rem;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
   }
 
   .eyebrow {
@@ -112,7 +100,7 @@
 
   .pill-link {
     align-items: center;
-    background: rgba(255, 255, 255, 0.92);
+    background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 9999px;
     color: var(--ink);
@@ -120,13 +108,12 @@
     gap: 0.45rem;
     padding: 0.55rem 0.9rem;
     text-decoration: none;
-    transition: transform 120ms ease, border-color 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+    transition: transform 120ms ease, border-color 120ms ease, background-color 120ms ease;
   }
 
   .pill-link:hover {
     background: white;
-    border-color: rgba(122, 111, 94, 0.42);
-    box-shadow: 0 10px 20px rgba(43, 41, 37, 0.09);
+    border-color: var(--accent);
     transform: translateY(-1px);
   }
 
@@ -134,23 +121,9 @@
     overflow: hidden;
   }
 
-  .hero-card::after {
-    background:
-      radial-gradient(circle at top right, rgba(92, 85, 74, 0.08), transparent 34%),
-      radial-gradient(circle at bottom left, rgba(154, 143, 125, 0.09), transparent 30%);
-    content: '';
-    inset: 0;
-    pointer-events: none;
-    position: absolute;
-  }
-
-  .hero-panel {
-    backdrop-filter: blur(4px);
-  }
-
   .hero-chip {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(209, 200, 187, 0.95);
+    background: var(--panel);
+    border: 1px solid var(--line);
     border-radius: 999px;
     color: var(--muted);
     display: inline-flex;
@@ -161,17 +134,16 @@
   }
 
   .note-card {
-    background: linear-gradient(180deg, #f3ede5, #fbf8f3);
-    border: 1px solid #d8ccbd;
+    background: var(--soft);
+    border: 1px solid var(--line);
     border-radius: 1.25rem;
-    box-shadow: 0 12px 24px rgba(92, 85, 74, 0.07);
-    color: #5f5547;
+    color: var(--ink);
     padding: 0.9rem 1rem;
   }
 
   .tensor-cell {
-    background: white;
-    border: 1px solid #d4cdc2;
+    background: var(--panel);
+    border: 1px solid var(--line);
     color: var(--ink);
     padding: 0.35rem 0.45rem;
     text-align: center;

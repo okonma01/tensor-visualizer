@@ -47,12 +47,11 @@ export default function ImageSection() {
         emoji="🖼️"
         title="Image Data"
         subtitle="A grayscale image is a grid of intensity values, so the picture becomes a 2D tensor with one number at each location."
-        shape={`[${size}, ${size}]`}
       />
 
       <div className="note-card mb-6 text-sm leading-6">
-        <p className="text-sm text-slate-600">
-          <strong className="text-slate-900">{DIGIT.label}.</strong> This example uses a 16x16 handwritten zero, where each pixel intensity is stored as an integer from 0 (white) to 255 (black).
+        <p className="text-sm text-gray-700">
+          <strong className="text-gray-900">{DIGIT.label}.</strong> This example uses a 16x16 handwritten zero, where each pixel intensity is stored as an integer from 0 (white) to 255 (black).
         </p>
       </div>
 
@@ -60,7 +59,7 @@ export default function ImageSection() {
         <div className="space-y-4">
           <div className="soft-panel">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <h3 className="text-lg font-bold text-slate-900">Image preview</h3>
+              <h3 className="text-lg font-bold text-gray-900">Image preview</h3>
               <code className="rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent)]">16 × 16 pixels</code>
             </div>
             <div className="flex justify-center">
@@ -68,8 +67,8 @@ export default function ImageSection() {
             </div>
           </div>
 
-          <div className="soft-panel text-sm leading-6 text-slate-600">
-            <strong className="text-slate-900">Model view:</strong> the input is a 16x16 grid of 256 pixel intensities, not the handwritten digit as a human sees it.
+          <div className="soft-panel text-sm leading-6 text-gray-700">
+            <strong className="text-gray-900">Model view:</strong> the input is a 16x16 grid of 256 pixel intensities, not the handwritten digit as a human sees it.
           </div>
         </div>
 
@@ -77,17 +76,17 @@ export default function ImageSection() {
           <div className="soft-panel overflow-auto">
             <div className="flex items-center justify-between gap-3 mb-4">
               <div>
-                <h3 className="text-lg font-bold text-slate-900">Pixel tensor</h3>
-                <p className="text-sm text-slate-500">Hover a cell to inspect one matrix entry.</p>
+                <h3 className="text-lg font-bold text-gray-900">Pixel tensor</h3>
+                <p className="text-sm text-gray-700">Hover a cell to inspect one matrix entry.</p>
               </div>
               <code className="rounded-xl bg-white px-3 py-1 text-xs font-mono text-[color:var(--accent)]">[{size}, {size}]</code>
             </div>
-            <PixelGrid data={tensorData} hoveredPixel={hoveredPixel} onHover={setHoveredPixel} cellClassName="flex h-[18px] w-[18px] items-center justify-center rounded-[3px] text-[8px] font-mono sm:h-[20px] sm:w-[20px]" showValue gap="3px" ringClassName="ring-2 ring-[color:var(--accent-3)] scale-110 shadow-sm" />
+            <PixelGrid data={tensorData} hoveredPixel={hoveredPixel} onHover={setHoveredPixel} cellClassName="flex h-[18px] w-[18px] items-center justify-center rounded-[3px] text-[8px] font-mono sm:h-[20px] sm:w-[20px]" showValue gap="3px" ringClassName="ring-2 ring-[color:var(--accent-3)] scale-110" />
           </div>
 
           <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_12rem]">
-            <div className="soft-panel text-sm leading-6 text-slate-600">
-              <strong className="text-slate-900">Normalization:</strong> a common preprocessing step divides pixel values by 255 so the tensor lives in <code className="font-mono">[0, 1]</code> instead of <code className="font-mono">[0, 255]</code>.
+            <div className="soft-panel text-sm leading-6 text-gray-700">
+              <strong className="text-gray-900">Normalization:</strong> a common preprocessing step divides pixel values by 255 so the tensor lives in <code className="font-mono">[0, 1]</code> instead of <code className="font-mono">[0, 255]</code>.
             </div>
 
             <div className="note-card text-sm">
